@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>sc_time</title>
+  <style>
+	  @font-face {
+	  font-family: "OCR-A-Ext";
+	  src: url(../fonts/OCRAEXT.TTF) format("truetype");
+	  }
+  </style>
+</head>
+
+<body translate="no" align="center">
+  <div id="output";
+       style="display: inline-block;
+              font-family: OCR-A-Ext;
+              font-style: normal;
+              font-weight: 400;
+              font-size: 30px;
+              text-align: center;
+              color: #949a1c; 
+              border-radius: 1px; 
+              padding: 5px;">
+  </div>
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js'></script>
+  <script>
+// https://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
+var urlParams;
+(function () {
+    var match,
+        pl     = /\+/g,  // Regex for replacing addition symbol with a space
+        search = /([^&=]+)=?([^&]*)/g,
+        decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+        query  = window.location.search.substring(1);
+    urlParams = {};
+    while (match = search.exec(query))
+       urlParams[decode(match[1])] = decode(match[2]);
+})();
+var output = document.getElementById("output");
+if (urlParams["style"]) output.setAttribute("style", urlParams["style"]);
+if (urlParams["bodyStyle"]) document.body.setAttribute("style", urlParams["bodyStyle"]);
+var c;
+setInterval(
+c = function() {
+	output.innerText = moment().add(930, 'years').format(urlParams["format"] || 'YYYY MMM DD HH:mm:ss ZZ');
+//    output.innerText = moment().format(urlParams["format"] || '');
+}, 1000);
+c();
+  </script>
+</body>
+</html>
